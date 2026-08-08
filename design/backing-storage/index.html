@@ -1,0 +1,2800 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="FOCUS-based, multi-cloud spend visualization. Finds what's burning money in the dark.">
+      
+      
+      
+        <link rel="canonical" href="https://getflashlight.app/design/backing-storage/">
+      
+      
+        <link rel="prev" href="../ai-costs/">
+      
+      
+        <link rel="next" href="../backing-compute/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/logo.svg">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>Backing storage - Flashlight</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Inter";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="white" data-md-color-accent="green">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#backing-storage-the-cloud-storage-bill-behind-databricks" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Flashlight" class="md-header__button md-logo" aria-label="Flashlight" data-md-component="logo">
+      
+  <img src="../../assets/logo.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Flashlight
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Backing storage
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="white" data-md-color-accent="green"  aria-label="Dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="black" data-md-color-accent="green"  aria-label="Light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/ychaparala/getflashlight" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    ychaparala/getflashlight
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../getting-started/overview/" class="md-tabs__link">
+          
+  
+  
+  Get started
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../guides/configure/" class="md-tabs__link">
+          
+  
+  
+  User guide
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../architecture/" class="md-tabs__link">
+          
+  
+  
+  Concepts
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../connectors/overview/" class="md-tabs__link">
+          
+  
+  
+  Connectors
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../reference/cli/" class="md-tabs__link">
+          
+  
+  
+  Reference
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../troubleshooting/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Troubleshooting
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../../development/contributing/" class="md-tabs__link">
+          
+  
+  
+  Development
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Flashlight" class="md-nav__button md-logo" aria-label="Flashlight" data-md-component="logo">
+      
+  <img src="../../assets/logo.svg" alt="logo">
+
+    </a>
+    Flashlight
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/ychaparala/getflashlight" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    ychaparala/getflashlight
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Get started
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Get started
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../getting-started/overview/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../getting-started/installation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Install Flashlight
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../quickstart/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quickstart
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../getting-started/real-source/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Connect a real source
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    User guide
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    User guide
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guides/configure/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Configure Flashlight
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guides/ingest/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ingest and manage data
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guides/dashboard/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Explore the dashboard
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guides/mcp/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Use Flashlight with agents
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guides/demo/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Deploy the demo
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Concepts
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Concepts
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../architecture/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Data architecture
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../concepts/focus-and-integrity/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    FOCUS and cost integrity
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../concepts/gold-views/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    GOLD views and metrics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../efficiency-waste/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Efficiency and recoverable spend
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ai-costs/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    AI costs and usage
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Backing storage
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Backing storage
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+  
+
+<nav class="md-nav md-nav--secondary" aria-label="On this page">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      On this page
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#the-problem" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The problem
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-counts-managed-storage-only" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What counts: managed storage only
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#two-bills-never-one-number" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Two bills, never one number
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-it-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How it works
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="How it works">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-discovery-unity-catalogs-bucket-map" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Discovery — Unity Catalog's bucket map
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-persistence-a-third-medallion-plane" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Persistence — a third medallion plane
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-the-cost-side-s3-in-the-aws-pull" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. The cost side — S3 in the AWS pull
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-gold-storagebacking_storage_month" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. GOLD — storage.backing_storage_month
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-the-dashboard" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. The dashboard
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#known-limitations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Known limitations
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#migration-notes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Migration notes
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../backing-compute/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Backing compute
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Connectors
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Connectors
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../connectors/overview/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview and support matrix
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../connectors/aws/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    AWS
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../connectors/databricks/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Databricks
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../connectors/redshift/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Amazon Redshift
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../connectors/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mapping details
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../connectors/custom/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Build a connector
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Reference
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Reference
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/cli/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CLI
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/configuration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Configuration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/data-contracts/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Data contracts
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/mcp-tools/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    MCP tools
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../troubleshooting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Troubleshooting
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Development
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Development
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../development/contributing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Contributing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../development/documentation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Documentation guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_8_3" id="__nav_8_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Design decisions
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_8_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_8_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Design decisions
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../efficiency-waste/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Efficiency and recoverable spend
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ai-costs/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    AI costs and usage
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Backing storage
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Backing storage
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+  
+
+<nav class="md-nav md-nav--secondary" aria-label="On this page">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      On this page
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#the-problem" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The problem
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-counts-managed-storage-only" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What counts: managed storage only
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#two-bills-never-one-number" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Two bills, never one number
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-it-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How it works
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="How it works">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-discovery-unity-catalogs-bucket-map" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Discovery — Unity Catalog's bucket map
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-persistence-a-third-medallion-plane" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Persistence — a third medallion plane
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-the-cost-side-s3-in-the-aws-pull" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. The cost side — S3 in the AWS pull
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-gold-storagebacking_storage_month" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. GOLD — storage.backing_storage_month
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-the-dashboard" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. The dashboard
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#known-limitations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Known limitations
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#migration-notes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Migration notes
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../backing-compute/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Backing compute
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+  
+
+<nav class="md-nav md-nav--secondary" aria-label="On this page">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      On this page
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#the-problem" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The problem
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-counts-managed-storage-only" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What counts: managed storage only
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#two-bills-never-one-number" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Two bills, never one number
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-it-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How it works
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="How it works">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-discovery-unity-catalogs-bucket-map" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Discovery — Unity Catalog's bucket map
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-persistence-a-third-medallion-plane" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Persistence — a third medallion plane
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-the-cost-side-s3-in-the-aws-pull" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. The cost side — S3 in the AWS pull
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-gold-storagebacking_storage_month" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. GOLD — storage.backing_storage_month
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-the-dashboard" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. The dashboard
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#known-limitations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Known limitations
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#migration-notes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Migration notes
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="backing-storage-the-cloud-storage-bill-behind-databricks">Backing storage — the cloud storage bill behind Databricks</h1>
+<h2 id="the-problem">The problem</h2>
+<p>Databricks' FOCUS bill (<code>system.billing.usage</code>) covers <strong>DBU compute only</strong>. Storage lives
+in customer-owned S3 buckets and is billed by AWS. So "what does Databricks storage cost?"
+had no answer anywhere in Flashlight: the Databricks plane doesn't contain it, and the AWS
+plane contains it but can't tell you which buckets are Databricks'.</p>
+<p>Unity Catalog knows which buckets Databricks <strong>manages</strong>. The AWS FOCUS export knows what
+those buckets cost. This feature joins the two — and is careful about which buckets qualify,
+because "Unity Catalog can see it" and "Databricks pays for it" are not the same set.</p>
+<h2 id="what-counts-managed-storage-only">What counts: managed storage only</h2>
+<p>Not everything Unity Catalog can see is Databricks' storage cost. Two relationships look
+alike in the metadata and are completely different in a bill:</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th><strong>Managed</strong> storage</th>
+<th><strong>External</strong> location</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Who provisioned it</td>
+<td>Databricks</td>
+<td>it already existed</td>
+</tr>
+<tr>
+<td>Drop the UC object</td>
+<td>the data is <strong>deleted</strong></td>
+<td>the data is <strong>untouched</strong></td>
+</tr>
+<tr>
+<td>Whose cost is it?</td>
+<td>Databricks'</td>
+<td>whoever owns that pipeline's</td>
+</tr>
+<tr>
+<td>Counted here?</td>
+<td><strong>yes</strong></td>
+<td><strong>no</strong></td>
+</tr>
+</tbody>
+</table>
+<p>So <code>mapping = 'databricks'</code> means <strong>the bucket holds the Unity Catalog metastore root</strong>.
+External locations are excluded on purpose: that data exists whether or not Databricks reads
+it, so costing it here would <strong>double-claim</strong> another team's data-lake spend against
+Databricks. Catalog roots and external locations are still <em>recorded</em> in
+<code>storage.storage_location</code> — the inventory is the audit trail that answers "why isn't this
+bucket counted?" — but only metastore roots cost anything.</p>
+<p><strong>This makes the figure a floor, not a total.</strong> Per-workspace DBFS root buckets and any
+catalog whose <code>storage_root</code> sits on its own bucket are <em>also</em> Databricks-provisioned managed
+storage, and both read as <code>unmapped</code> (see limitation #2). Under-claiming beats double-claiming,
+but the dashboard states it rather than leaving it to be discovered.</p>
+<h2 id="two-bills-never-one-number">Two bills, never one number</h2>
+<p><strong>The rule the whole feature is built around:</strong> this money is billed by AWS, is already
+counted in <code>aws.monthly_bill</code>, and is <strong>never added to Databricks spend</strong>. Summing DBU cost
+and the AWS infrastructure behind it is exactly the TCO capability CLAUDE.md removed, and
+nothing here reintroduces it.</p>
+<p>What makes that enforceable rather than merely intended:</p>
+<ul>
+<li>The views live in their own fixed GOLD group (<code>storage</code>), so nothing writes into
+  <code>gold/databricks/</code>. <code>databricks.monthly_bill</code> and the Databricks KPIs are untouched <strong>by
+  construction</strong> — asserted directly in
+  <code>tests/test_lake_roundtrip.py::test_backing_storage_never_changes_databricks_spend</code>.</li>
+<li>Every row carries <strong>two</strong> provider columns — <code>billing_provider_name</code> (who invoices it:
+  AWS) and <code>platform_provider_name</code> (whose metadata claims the bucket: Databricks) — so a
+  consumer cannot mistake one for the other.</li>
+<li>The join is AWS <strong>cost</strong> to Databricks <strong>metadata</strong> (a bucket list). It is never AWS cost
+  to Databricks cost.</li>
+<li>The GOLD <code>description</code> strings carry the rule, not just the dashboard caption, because MCP
+  and the assistant read those descriptions. <code>assistant_engine._PLAN_INSTRUCTIONS</code> states it
+  too.</li>
+</ul>
+<h2 id="how-it-works">How it works</h2>
+<h3 id="1-discovery-unity-catalogs-bucket-map">1. Discovery — Unity Catalog's bucket map</h3>
+<p><code>DatabricksConnector.fetch_storage_locations</code> (a best-effort <code>Connector</code> hook alongside
+<code>fetch_efficiency</code> / <code>fetch_driver_health</code> / <code>fetch_ai_usage</code>) reads three Unity Catalog
+surfaces via the Databricks SDK:</p>
+<table>
+<thead>
+<tr>
+<th>Source</th>
+<th><code>location_kind</code></th>
+<th>Field</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>metastores.summary()</code></td>
+<td><code>metastore_root</code></td>
+<td><code>storage_root</code></td>
+</tr>
+<tr>
+<td><code>catalogs.list()</code></td>
+<td><code>catalog</code></td>
+<td><code>storage_root</code> (falling back to <code>storage_location</code>)</td>
+</tr>
+<tr>
+<td><code>external_locations.list()</code></td>
+<td><code>external_location</code></td>
+<td><code>url</code>, <code>read_only</code>, <code>credential_name</code></td>
+</tr>
+</tbody>
+</table>
+<p>All three are <strong>pure REST — no running SQL warehouse required</strong>, unlike every other pull in
+that connector, so the map still refreshes on a workspace whose warehouse is stopped.</p>
+<p>Each listing is guarded independently: a token that can read external locations but not the
+metastore summary still yields the external locations. Losing one source degrades coverage;
+it does not blank the map.</p>
+<p><code>_parse_storage_url</code> resolves each URL to <code>(scheme, cloud_provider_name, bucket_name,
+key_prefix)</code>. <strong><code>key_prefix is None</code> means the URL addresses the bucket root</strong> — that
+distinction carries the whole mapping-confidence signal below and is never collapsed to an
+empty string.</p>
+<h3 id="2-persistence-a-third-medallion-plane">2. Persistence — a third medallion plane</h3>
+<p><code>StorageLocationRecord</code> → <code>storage_locations/</code> Parquet (<code>provider_name</code> /
+<code>snapshot_month</code>) → <code>metrics.storage_location</code>. Deliberately <strong>not</strong> an <code>EfficiencyRecord</code>
+with a new <code>EntityType</code>: <code>gold.efficiency_entity_month</code> is the coverage <em>denominator</em> that
+<code>efficiency_waste.coverage_caption()</code> exists to keep honest, and metadata rows would inflate
+the "measured" count — corrupting exactly the number that prevents over-claiming.</p>
+<p>Two deviations from its sibling planes, both intentional:</p>
+<ul>
+<li><strong><code>snapshot_month</code>, not <code>charge_month</code>.</strong> UC exposes only current state, so this is a
+  point-in-time inventory stamped with the month it ran in (the same call
+  <code>_fetch_table_inventory</code> makes). It is correspondingly <em>not</em> in <code>PERIOD_DIMENSIONS</code> — you
+  cannot trend along it.</li>
+<li><strong><code>write_storage_locations</code> takes no <code>IngestWindow</code></strong>, and an empty pull is a <strong>no-op, not
+  a purge</strong>. Unlike a cost window — where "the source no longer reports this month" is real
+  information and self-purging is the point — an empty metadata pull means the API call
+  failed or a grant is missing. Deleting a good map would turn a transient permission
+  problem into permanent data loss, and would make the tab imply Databricks has no storage
+  cost.</li>
+</ul>
+<p>Older snapshots are kept as the audit trail for "when did this bucket become
+Databricks-backed?"; <code>backing_storage_month</code> reads only the newest.</p>
+<h3 id="3-the-cost-side-s3-in-the-aws-pull">3. The cost side — S3 in the AWS pull</h3>
+<p><code>AwsFocusConfig.include_services</code> now defaults to Redshift's services <strong>+ Amazon S3</strong>
+(<code>DEFAULT_INCLUDE_SERVICES</code>). The alternative — pushing a UC-derived bucket allow-list into
+the scan predicate — was rejected: it would make the AWS pull depend on the Databricks pull
+having run first, and it would leave the mapped figure with no denominator.</p>
+<p><code>aws_focus._cost_subcategory_sql()</code> stamps <code>x_cost_subcategory</code> on S3 rows —
+<code>storage</code> / <code>requests</code> / <code>data_transfer</code> / <code>monitoring</code> / <code>early_delete</code> / <code>other</code>. The split
+matters because Databricks drives heavy LIST/GET metadata traffic: a request-volume problem
+and a storage-growth problem look identical in one total and have completely different
+remedies.</p>
+<p>Both service families compose into <strong>one</strong> CASE expression, because
+<code>sql_mapping.mapping_sql</code> accepts exactly one <code>cost_subcategory_sql</code>. <code>ChargeCategory =
+'Credit'</code> is hoisted above both branches; <code>NULLIF(…, 'committed')</code> stays on the Redshift
+branch only (S3 has no commitment SKUs).</p>
+<h3 id="4-gold-storagebacking_storage_month">4. GOLD — <code>storage.backing_storage_month</code></h3>
+<p><code>065_gold_storage.sql</code> keeps <strong>every</strong> S3 row, labelled:</p>
+<table>
+<thead>
+<tr>
+<th><code>mapping</code></th>
+<th>meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>databricks</code></td>
+<td>the bucket holds the UC <strong>metastore root</strong> — managed storage</td>
+</tr>
+<tr>
+<td><code>unmapped</code></td>
+<td>it doesn't. Includes external-location buckets, <strong>deliberately</strong></td>
+</tr>
+<tr>
+<td><code>no_resource_id</code></td>
+<td>S3 cost carrying no ResourceId at all — attributable to no bucket</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th><code>mapping_confidence</code></th>
+<th>meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>whole_bucket</code></td>
+<td>the metastore root addresses the bucket root, so the whole bucket is Databricks storage</td>
+</tr>
+<tr>
+<td><code>prefix_scoped</code></td>
+<td>it claims a key prefix only — the cost is an <strong>upper bound</strong>. The usual case, since a metastore root is normally <code>s3://bucket/&lt;metastore-id&gt;</code></td>
+</tr>
+<tr>
+<td><code>n/a</code></td>
+<td>not managed storage</td>
+</tr>
+</tbody>
+</table>
+<p>Three implementation details are load-bearing rather than cosmetic:</p>
+<ul>
+<li><strong><code>location_kind = 'metastore_root'</code></strong> is where the managed-only rule is enforced. It also
+  gives managed storage <strong>precedence</strong> for free: a bucket that is both a metastore root and an
+  external-location target (common — a catalog's <code>storage_root</code> often sits inside an external
+  location's path) still matches, so it reads <code>databricks</code> rather than being demoted.</li>
+<li><strong>One row per bucket</strong> in the <code>bucket_map</code> CTE. A metastore root can be reported more than
+  once (several metastores, or a re-pull mid-window); joining raw location rows would multiply
+  that bucket's cost by the number of locations — inventing spend that is not on the bill.</li>
+<li><strong><code>coalesce(x_cost_subcategory, '(unclassified)')</code>.</strong> Unlike
+  <code>gold.spend_by_cost_subcategory_month</code>, an unclassified row must not be dropped here: it's
+  part of the denominator, and a lake ingested before the classifier shipped has NULL for
+  every S3 row.</li>
+</ul>
+<p>Summing <code>net_cost</code> across all <code>mapping</code> values reproduces the account's whole S3 bill — the
+contract asserted in <code>test_backing_storage_accounts_for_every_s3_row</code> and in
+<code>build_demo_lake.verify_demo_lake</code>.</p>
+<h3 id="5-the-dashboard">5. The dashboard</h3>
+<p><code>Databricks → Backing storage</code> (<code>views/backing_storage.py</code>). Two producers
+(<code>aws_focus</code> for the cost, <code>databricks</code> for the map) but one <em>subject</em>, which is why it's an
+<code>extra_tabs</code> entry on the Databricks page rather than a nav entry of its own.</p>
+<p>Two panels: one table of Databricks-managed buckets (metastore roots first, then catalogs) and
+the monthly cost split by S3 charge type.</p>
+<p><strong>A KPI card on the page itself</strong>, not only inside the tab (<code>kpi_card</code>, passed to
+<code>provider_focus.render</code> as <code>extra_kpis</code>): "what does Databricks cost me?" is asked at the top
+of the page, and a number a tab away is a number most readers never see. It is windowed to the
+page's date control, sits beside <code>Databricks net</code> and never inside it — the sub-line says
+<code>AWS-billed S3 · not in net · a floor</code> and the card takes its own hue so it doesn't read as
+another slice of one total. It is omitted entirely, never <code>$0</code>, when nothing is mapped: a zero
+there would answer "what does Databricks storage cost?" with "nothing" on precisely the lake
+that has not looked yet. Each empty state still names its own cause — a gap
+that only appears once it's already large is a gap nobody plans around — and the empty-map
+state still states the S3 denominator.</p>
+<p><strong>The lead prose is gone.</strong> It opened with four paragraphs above the first number: the
+two-bills caption, a coverage caption (managed share of the S3 bill with the prefix-scoped
+caveat), the floor disclosure and the gap list. Removed on request as wall-of-text. The
+<em>rules</em> are unchanged and still recorded here, in CLAUDE.md and in <code>065_gold_storage.sql</code>'s
+header — the figure is still a floor, workspace DBFS roots and per-catalog storage roots are
+still uncounted, and the two bills must still never be summed. What carries that in the UI is
+per-row rather than prose: the cost figure itself (<code>≤ $…</code> for a prefix-scoped upper bound,
+<code>$… (shared)</code> when several catalogs share a bucket, bare <code>$…</code> when ownership is whole-bucket)
+plus a one-line caption under the table explaining <code>≤</code>, and the <code>S3 cost (AWS-billed)</code>
+column heading. The managed <strong>share</strong> of total S3 spend is no longer
+on screen at all; it's a GOLD/MCP query.</p>
+<p><strong>One table, not two.</strong> The managed-bucket list and the per-catalog list were separate panels
+showing the same rows twice — each managed object sits on its own bucket, so bucket-grained
+cost <em>is</em> object-grained cost. They're merged: bucket, owning catalog/metastore, kind.</p>
+<p><strong>No per-bucket list of unmanaged buckets.</strong> It was there originally as the visible
+denominator, but on a real account (2,008 S3 buckets, one metastore root) a 20-row table of
+unrelated buckets buried the single number the tab exists to report, and the tab read as "here
+is all your S3 spend". Per-bucket detail stays queryable via <code>storage.backing_storage_month</code>
+in GOLD/MCP.</p>
+<h2 id="known-limitations">Known limitations</h2>
+<p>Investigated and recorded here rather than silently left as gaps.</p>
+<ol>
+<li>
+<p><strong>The AWS bill's S3 grain is the bucket; Unity Catalog's grain is the prefix.</strong> A FOCUS
+   S3 row's <code>ResourceId</code> is the bucket ARN — there is no per-prefix cost anywhere in the
+   export. So when a UC external location points at <code>s3://bucket/prefix</code>, the bucket's cost
+   <strong>cannot be split</strong> between Databricks and whatever else lives there. Surfaced as
+   <code>mapping_confidence='prefix_scoped'</code> and rendered with an explicit <code>≤</code> on the cost
+   figure, never as a bare number. There is no fix short of S3 Storage Lens prefix
+   metrics or per-prefix inventory, both separate ingestion pipelines.</p>
+</li>
+<li>
+<p><strong>Workspace DBFS root buckets are out of scope, so the figure is a floor.</strong> A workspace's
+   root bucket is not a Unity Catalog object, so none of
+   <code>metastores</code>/<code>catalogs</code>/<code>external_locations</code> reports it — its cost lands in <code>unmapped</code>
+   even though it <em>is</em> Databricks-provisioned managed storage. Same for a catalog whose
+   <code>storage_root</code> sits on its own bucket (recorded as <code>location_kind='catalog'</code>, not costed).
+   Stated in the tab's floor disclosure so it can't read as "we checked and there's nothing
+   there".</p>
+</li>
+</ol>
+<p>This is <strong>fixable, and deliberately deferred rather than impossible.</strong> Verified against the
+   installed SDK: <code>AccountClient.storage.list()</code> returns <code>StorageConfiguration</code> with
+   <code>root_bucket_info.bucket_name</code>, attributable per workspace via
+   <code>AccountClient.workspaces.list().storage_configuration_id</code>. It needs <strong>account-level</strong>
+   credentials — a Databricks <code>account_id</code> plus an account-admin service principal, distinct
+   from the current workspace host + PAT — which is why it isn't wired up. If someone revisits
+   this: add it as a fourth best-effort source in <code>_storage_location_sources()</code> with
+   <code>location_kind='workspace_root'</code>, gated on the new optional config and skipped silently
+   when absent, exactly like every other source there. An explicit <code>extra_storage_buckets</code>
+   list would cover the residue (legacy mounts) as <code>location_kind='declared'</code> — kept a
+   distinct kind so a human assertion never masquerades as a UC-discovered fact.</p>
+<p>Explicitly rejected: inferring Databricks ownership from bucket <strong>naming patterns</strong>
+   (<code>dbrk-*</code>, <code>d??-prd-&lt;hash&gt;</code>). On a real account these sit beside application buckets that
+   no rule can distinguish, and a guess rendered as a mapping is precisely what the confidence
+   labelling exists to prevent.</p>
+<ol>
+<li>
+<p><strong>The map is a snapshot applied to history.</strong> <code>backing_storage_month</code> uses the newest
+   <code>snapshot_month</code> for every month of cost, so a bucket registered last week is credited
+   with its earlier cost too. Usually right — the data generally predates the registration —
+   but it is an assumption, which is why the caption says the map is "as of the last sync".
+   Earlier snapshots remain in <code>metrics.storage_location</code> for auditing.</p>
+</li>
+<li>
+<p><strong>A <code>cost_source="cost_explorer"</code> AWS connection can never map a bucket.</strong>
+   <code>_map_ce_group</code> never sets <code>resource_id</code> (Cost Explorer returns account-level SERVICE
+   totals), so all of its S3 cost lands in <code>mapping='no_resource_id'</code>. This is a first-class
+   value rather than a footnote, and the gap caption reports its dollar total.</p>
+</li>
+<li>
+<p><strong>Non-AWS UC locations don't join.</strong> <code>abfss://</code>/<code>gs://</code> locations are recorded (and
+   counted in the gap caption) but there is no Azure or GCP cost connector to label, so they
+   can never become mapped cost rows.</p>
+</li>
+<li>
+<p><strong><code>schemas.list()</code> is deliberately not pulled.</strong> One REST call per catalog (an N+1
+   against a large metastore), and a schema's managed location is virtually always under its
+   catalog's root — so it would add bucket coverage almost never. Revisit if a real account
+   turns out to put schemas on their own buckets. <code>tables.list()</code> is out of scope for the
+   same reason at a larger scale.</p>
+</li>
+<li>
+<p><strong>⚠ The S3 subcategory keyword table is UNVALIDATED against a live FOCUS export.</strong>
+   <code>_S3_CATEGORY_RULES</code> in <code>aws_focus.py</code> is a text-match heuristic over
+   <code>ChargeDescription</code> + <code>SkuId</code>, exactly like its Redshift sibling — and that sibling needed
+   <strong>two</strong> corrections after meeting real billing text (<code>instance</code> and <code>data scan</code>, without
+   which the single largest line item in the account, $44K, sat silently in <code>other</code>). Assume
+   this one needs the same.</p>
+<p><strong>To validate:</strong> run <code>flashlight ingest</code> against a real AWS account with S3 in
+<code>include_services</code>, then check the distribution:</p>
+<div class="highlight"><pre><span></span><code><span class="k">SELECT</span><span class="w"> </span><span class="n">cost_subcategory</span><span class="p">,</span>
+<span class="w">       </span><span class="k">count</span><span class="p">(</span><span class="o">*</span><span class="p">)</span><span class="w">              </span><span class="k">AS</span><span class="w"> </span><span class="n">rows_seen</span><span class="p">,</span>
+<span class="w">       </span><span class="n">round</span><span class="p">(</span><span class="k">sum</span><span class="p">(</span><span class="n">net_cost</span><span class="p">),</span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">total_cost</span>
+<span class="k">FROM</span><span class="w"> </span><span class="k">storage</span><span class="p">.</span><span class="n">backing_storage_month</span>
+<span class="k">GROUP</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">cost_subcategory</span>
+<span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">total_cost</span><span class="w"> </span><span class="k">DESC</span><span class="p">;</span>
+</code></pre></div>
+<p>A large <code>other</code> or <code>(unclassified)</code> bucket means keywords are missing. Cross-check the
+raw text with <code>SELECT DISTINCT charge_description, sku_id FROM raw.focus_record WHERE
+service_name = 'Amazon Simple Storage Service'</code> and correct the table.</p>
+<p>The open question underneath it: AWS's discriminating <strong>usage type</strong>
+(<code>TimedStorage-ByteHrs</code>, <code>Requests-Tier1</code>, <code>DataTransfer-Out-Bytes</code>) is what these
+keywords really target, and whether it reaches us in <code>SkuId</code> at all in the FOCUS 1.2
+export is unconfirmed. If it doesn't, the fix is an <code>x_UsageType</code> column — which means
+adding to <code>_FOCUS_COLUMNS</code> <strong>and recreating the export</strong> (the FOCUS table version is
+baked into it), so the design deliberately doesn't assume it.</p>
+<p>This is the same open question as the <code>s3_intelligent_tiering</code> rule's caveat in
+<code>efficiency/waste_rules.py</code>, over the same text: <strong>validating one validates the other.</strong></p>
+</li>
+<li>
+<p><strong>The <code>s3_intelligent_tiering</code> waste rule became reachable with this change.</strong> It was
+   written but dead, because S3 rows never entered BRONZE under the old Redshift-only
+   default. Its findings (<code>provider_name='AWS'</code>, <code>entity_type='storage'</code>) now appear in
+   <code>efficiency.waste_record</code> and <code>efficiency.waste_by_owner_month</code>. Findings on <em>unmapped</em>
+   buckets exist in GOLD and MCP with no dashboard panel of their own — a known gap, left
+   visible rather than suppressed: a working signal is not a bug.</p>
+</li>
+</ol>
+<h2 id="migration-notes">Migration notes</h2>
+<ul>
+<li><strong>The AWS group's totals grow by the S3 bill</strong> on the next ingest — Home's AWS card,
+  <code>aws.monthly_bill</code>, <code>spend_by_service_month</code>, <code>invoice_reconciliation_month</code> and tag
+  coverage all move. <code>/aws</code> does <strong>not</strong> (it is Redshift-scoped), so its scope caption now
+  says so explicitly and points S3 at the Backing storage tab.</li>
+<li><strong>The <code>/aws</code> display label is now derived.</strong> <code>data._aws_label</code> reads "AWS Redshift" while
+  every service in the group is one of Redshift's own, and plain "AWS" once it holds more.
+  It fails toward the <em>narrower</em> label on any query problem — claiming less than the group
+  holds is a smaller lie than implying the whole account is there.</li>
+<li><strong>Only the re-pulled window changes.</strong> <code>bronze.write_window</code> is authoritative per
+  (connector, window) and the CLI default is a 35-day lookback, so an existing lake gets a
+  step change at the window boundary: older months Redshift-only, recent months with S3. Run
+  <code>flashlight ingest --start &lt;YYYY-MM-01&gt;</code> once to backfill.</li>
+<li><strong>Bytes scanned goes up</strong> — S3 line items at resource grain are numerous. The service
+  predicate is still pushed down into the Parquet scan, so this is a linear cost, not a
+  behaviour change.</li>
+<li><strong>Opting out</strong> stays a one-line edit: set <code>include_services</code> to just Redshift's service
+  names in <code>connections.yml</code>.</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../ai-costs/" class="md-footer__link md-footer__link--prev" aria-label="Previous: AI costs and usage">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                AI costs and usage
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../backing-compute/" class="md-footer__link md-footer__link--next" aria-label="Next: Backing compute">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Backing compute
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.top", "navigation.footer", "toc.follow", "search.suggest", "search.highlight", "content.code.copy", "content.tabs.link"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  </body>
+</html>

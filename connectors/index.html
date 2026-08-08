@@ -1,0 +1,2424 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="FOCUS-based, multi-cloud spend visualization. Finds what's burning money in the dark.">
+      
+      
+      
+        <link rel="canonical" href="https://getflashlight.app/connectors/">
+      
+      
+        <link rel="prev" href="redshift/">
+      
+      
+        <link rel="next" href="custom/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/logo.svg">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>Mapping details - Flashlight</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Inter";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="white" data-md-color-accent="green">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#source-connectors-focus-mappings" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="Flashlight" class="md-header__button md-logo" aria-label="Flashlight" data-md-component="logo">
+      
+  <img src="../assets/logo.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Flashlight
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Mapping details
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="white" data-md-color-accent="green"  aria-label="Dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="black" data-md-color-accent="green"  aria-label="Light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/ychaparala/getflashlight" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    ychaparala/getflashlight
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href=".." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../getting-started/overview/" class="md-tabs__link">
+          
+  
+  
+  Get started
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../guides/configure/" class="md-tabs__link">
+          
+  
+  
+  User guide
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../architecture/" class="md-tabs__link">
+          
+  
+  
+  Concepts
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="overview/" class="md-tabs__link">
+          
+  
+  
+  Connectors
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../reference/cli/" class="md-tabs__link">
+          
+  
+  
+  Reference
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../troubleshooting/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Troubleshooting
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../development/contributing/" class="md-tabs__link">
+          
+  
+  
+  Development
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Flashlight" class="md-nav__button md-logo" aria-label="Flashlight" data-md-component="logo">
+      
+  <img src="../assets/logo.svg" alt="logo">
+
+    </a>
+    Flashlight
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/ychaparala/getflashlight" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    ychaparala/getflashlight
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Get started
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Get started
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../getting-started/overview/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../getting-started/installation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Install Flashlight
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../quickstart/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quickstart
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../getting-started/real-source/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Connect a real source
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    User guide
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    User guide
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../guides/configure/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Configure Flashlight
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../guides/ingest/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ingest and manage data
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../guides/dashboard/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Explore the dashboard
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../guides/mcp/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Use Flashlight with agents
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../guides/demo/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Deploy the demo
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Concepts
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Concepts
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../architecture/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Data architecture
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../concepts/focus-and-integrity/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    FOCUS and cost integrity
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../concepts/gold-views/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    GOLD views and metrics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../design/efficiency-waste/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Efficiency and recoverable spend
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../design/ai-costs/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    AI costs and usage
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../design/backing-storage/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Backing storage
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../design/backing-compute/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Backing compute
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Connectors
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Connectors
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="overview/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview and support matrix
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="aws/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    AWS
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="databricks/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Databricks
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="redshift/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Amazon Redshift
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mapping details
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mapping details
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+  
+
+<nav class="md-nav md-nav--secondary" aria-label="On this page">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      On this page
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#aws-focus-setup" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        AWS FOCUS setup
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cost-explorer-fallback-no-export-needed" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cost Explorer fallback (no export needed)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#databricks-mapping" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Databricks mapping
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#databricks-efficiency-table-inventory-driver-health-telemetry" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Databricks efficiency, table inventory &amp; driver-health telemetry
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#redshift-efficiencywaste-telemetry" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Redshift efficiency/waste telemetry
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="custom/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Build a connector
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Reference
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Reference
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference/cli/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CLI
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference/configuration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Configuration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference/data-contracts/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Data contracts
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference/mcp-tools/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    MCP tools
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../troubleshooting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Troubleshooting
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Development
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Development
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../development/contributing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Contributing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../development/documentation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Documentation guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_8_3" id="__nav_8_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Design decisions
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_8_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Design decisions
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../design/efficiency-waste/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Efficiency and recoverable spend
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../design/ai-costs/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    AI costs and usage
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../design/backing-storage/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Backing storage
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../design/backing-compute/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Backing compute
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+  
+
+<nav class="md-nav md-nav--secondary" aria-label="On this page">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      On this page
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#aws-focus-setup" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        AWS FOCUS setup
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cost-explorer-fallback-no-export-needed" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cost Explorer fallback (no export needed)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#databricks-mapping" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Databricks mapping
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#databricks-efficiency-table-inventory-driver-health-telemetry" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Databricks efficiency, table inventory &amp; driver-health telemetry
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#redshift-efficiencywaste-telemetry" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Redshift efficiency/waste telemetry
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="source-connectors-focus-mappings">Source connectors &amp; FOCUS mappings</h1>
+<table>
+<thead>
+<tr>
+<th>Connector</th>
+<th>Source</th>
+<th>How it maps to FOCUS</th>
+<th>Efficiency signal?</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>aws_focus</code></td>
+<td>AWS Data Exports (FOCUS 1.2 Parquet in S3), or Cost Explorer via <code>cost_source="cost_explorer"</code></td>
+<td>S3 export: already FOCUS, light coercion. Cost Explorer: coarser account-level <code>SERVICE</code> totals, mapped in Python</td>
+<td>S3 Intelligent-Tiering candidates</td>
+</tr>
+<tr>
+<td><code>databricks</code></td>
+<td>Databricks system tables</td>
+<td><strong>vendored Databricks → FOCUS 1.3 SQL</strong> (below)</td>
+<td>jobs/clusters/warehouses/tables + driver fleet health</td>
+</tr>
+<tr>
+<td><code>redshift</code></td>
+<td>Redshift Data API + Cost Explorer (efficiency/waste only)</td>
+<td>no cost mapping — <code>fetch()</code> is a deliberate no-op; see below</td>
+<td>query patterns, WLM, spill, tables</td>
+</tr>
+<tr>
+<td><code>bigquery</code> / <code>snowflake</code></td>
+<td>—</td>
+<td>stubs (planned)</td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+<p>Connectors are configured in <code>connections.yml</code> (scaffolded by <code>flashlight init</code>);
+credentials come from <code>.env</code> via the <code>*_env</code> fields. Each connection also takes an
+optional <code>name</code> — falls back to its <code>type</code> for the common single-connection case,
+but needed (and enforced unique) once you have more than one connection of the
+same type, e.g. several Redshift clusters.</p>
+<h2 id="aws-focus-setup">AWS FOCUS setup</h2>
+<p>This is the primary AWS path — a native <strong>AWS Data Export</strong> in FOCUS 1.2 format,
+delivered straight to your own S3 bucket. Set <code>AwsFocusConfig.cost_source:
+cost_explorer</code> instead to skip the export entirely and query Cost Explorer
+directly — coarser (account-level <code>SERVICE</code> totals, no per-charge detail, no
+cost-subcategory classification) and needs <code>ce:GetCostAndUsage</code>, but no export
+to provision. Pick one explicitly; there's no automatic fallback between them.</p>
+<p><strong>1. Create the export.</strong></p>
+<div class="highlight"><pre><span></span><code>flashlight<span class="w"> </span>aws<span class="w"> </span>create-export<span class="w"> </span>--bucket<span class="w"> </span>my-focus-bucket<span class="w"> </span>--prefix<span class="w"> </span>billing/focus
+</code></pre></div>
+<p>Walks you through bucket/prefix/region with resolved defaults, then provisions
+a <code>flashlight-focus</code> Data Export at FOCUS 1.2, <code>DAILY</code> granularity,
+<code>OVERWRITE_REPORT</code> delivery (each refresh replaces that billing period's files
+in place, rather than accumulating per-execution copies). <code>--dry-run</code> prints
+the request without creating anything.</p>
+<p><strong>2. Grant the bucket policy AWS Data Exports needs to write there.</strong></p>
+<div class="highlight"><pre><span></span><code>flashlight<span class="w"> </span>aws<span class="w"> </span>bucket-policy<span class="w"> </span>--bucket<span class="w"> </span>my-focus-bucket<span class="w"> </span>--dry-run<span class="w">   </span><span class="c1"># inspect first</span>
+flashlight<span class="w"> </span>aws<span class="w"> </span>bucket-policy<span class="w"> </span>--bucket<span class="w"> </span>my-focus-bucket
+</code></pre></div>
+<p>This is a separate, required step — creating the export does not attach the
+policy that lets the Data Exports service write to your bucket.</p>
+<p><strong>3. Wait for the first delivery, then confirm it landed.</strong></p>
+<div class="highlight"><pre><span></span><code>flashlight<span class="w"> </span>aws<span class="w"> </span>describe-export<span class="w"> </span>--bucket<span class="w"> </span>my-focus-bucket<span class="w"> </span>--prefix<span class="w"> </span>billing/focus
+</code></pre></div>
+<p>AWS backfills history and then delivers on the configured cadence; first
+delivery can take a while. <code>describe-export</code> reports which billing periods,
+how many files, and how much data has actually arrived — check this before
+wiring up <code>flashlight ingest</code> so a config mistake doesn't look like an AWS delay.</p>
+<p><strong>4. Point Flashlight at it</strong>, in <code>connections.yml</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="nt">connectors</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">aws_focus</span>
+<span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Prod cost</span>
+<span class="w">    </span><span class="nt">s3_bucket</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">my-focus-bucket</span>
+<span class="w">    </span><span class="nt">s3_prefix</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">billing/focus</span>
+<span class="w">    </span><span class="nt">region</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">us-east-1</span>
+<span class="w">    </span><span class="nt">include_services</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[]</span><span class="w">   </span><span class="c1"># [] = whole account; default is Redshift + S3</span>
+</code></pre></div>
+<p><code>include_services</code> is an allow-list of FOCUS <code>ServiceName</code> values — AWS Data
+Exports is account-wide and can't be scoped per service at the source, so
+Flashlight narrows here. Set <code>[]</code> to ingest the whole account, or list the
+specific services you want.</p>
+<p>It defaults to Redshift's own service names <strong>plus <code>Amazon Simple Storage
+Service</code></strong>. S3 is in the default because Databricks' own bill covers DBU compute
+only — the storage behind a Unity Catalog external location is billed by AWS, so
+without S3 here the Databricks → <strong>Backing storage</strong> tab has nothing to show (see
+<a href="../design/backing-storage/">Backing storage</a>). Narrowing it back to just
+Redshift's names opts out, and the AWS group's totals shrink accordingly.</p>
+<p><strong>5. Ingest.</strong></p>
+<div class="highlight"><pre><span></span><code>flashlight<span class="w"> </span>ingest
+</code></pre></div>
+<p><strong>How the read works.</strong> <code>aws_focus</code> doesn't run queries against an AWS API —
+it's a manifest-driven, DuckDB-pushdown Parquet scan straight over S3. Each
+billing period's <code>metadata/BILLING_PERIOD=YYYY-MM/…Manifest.json</code> names the
+<em>current</em> version of that period's data files, so the connector reads exactly
+those files (never a <code>*.parquet</code> glob) — that's what stops a re-run from
+double-counting a period under <code>CREATE_NEW_REPORT</code> delivery, where AWS also
+leaves the previous execution's copy sitting in the same folder. DuckDB then
+scans the manifest-listed Parquet directly from S3 with the <code>include_services</code>
+allow-list and the ingest window pushed down as a <code>WHERE</code> predicate — column
+pruning and predicate pushdown mean a narrow, service-scoped pull reads a
+fraction of the account's bytes, not the whole export.</p>
+<p><strong>Efficiency signal: S3 Intelligent-Tiering candidates.</strong> <code>aws_focus</code> also
+implements <code>fetch_efficiency()</code> — a local read of its own just-written BRONZE
+rows (no second S3/API call), grouped by <code>(bucket, month)</code>. A bucket is flagged
+as an intelligent-tiering candidate unless any of its line items already
+mention Intelligent-Tiering in <code>ChargeDescription</code>/<code>SkuId</code>. This is a
+text-match heuristic against the billing line, not a real storage-class field
+read from S3 — <code>candidate</code> confidence, not <code>high</code>.</p>
+<h2 id="cost-explorer-fallback-no-export-needed">Cost Explorer fallback (no export needed)</h2>
+<div class="highlight"><pre><span></span><code><span class="nt">connectors</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">aws_focus</span>
+<span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Prod cost</span>
+<span class="w">    </span><span class="nt">cost_source</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cost_explorer</span>
+<span class="w">    </span><span class="nt">region</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">us-east-1</span>
+<span class="w">    </span><span class="nt">include_services</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[]</span><span class="w">   </span><span class="c1"># [] = whole account; default is Redshift + S3</span>
+</code></pre></div>
+<p>Groups Cost Explorer's <code>get_cost_and_usage</code> by the <code>SERVICE</code> dimension and day,
+filtered by <code>include_services</code> — no S3 export, but only account-level totals
+per service, no per-charge detail, and no cost-subcategory classification (the
+Redshift $ breakdown other views rely on needs the FOCUS export's
+<code>ChargeDescription</code>/<code>SkuId</code>). Needs <code>ce:GetCostAndUsage</code> in addition to
+whatever IAM the S3 path would have needed.</p>
+<p>This path also <strong>cannot feed the backing-storage view</strong>: Cost Explorer returns
+account-level service totals with no <code>ResourceId</code>, so no S3 charge can be
+attributed to a bucket. Those rows land as <code>mapping='no_resource_id'</code>.</p>
+<p>There's no per-resource/tag scoping here (an earlier <code>aws_infra</code> connector did
+this for Databricks classic-compute AWS-infra attribution via a cluster tag;
+it was folded into this Cost Explorer path and that attribution capability was
+not carried over).</p>
+<h2 id="databricks-mapping">Databricks mapping</h2>
+<p>The <code>databricks</code> connector does <strong>not</strong> hand-roll the billing math. It runs the
+authoritative <strong>Databricks System Tables → FOCUS 1.3</strong> query, vendored verbatim at
+<a href="https://github.com/ychaparala/flashlight/blob/main/src/flashlight/ingest/connectors/sql/databricks_focus_1_3.sql"><code>src/flashlight/ingest/connectors/sql/databricks_focus_1_3.sql</code></a>
+from the Databricks solution accelerator
+<a href="https://github.com/databricks-solutions/cloud-infra-costs/blob/main/focus/focus_query.sql"><code>databricks-solutions/cloud-infra-costs</code></a>.
+The connector executes it on a SQL warehouse, then feeds the FOCUS-columned output
+through the same shared mapper used by the file/S3 connectors. The only field we add
+is <code>x_compute_class</code> (classic vs serverless), derived from the SKU — FOCUS doesn't
+carry it, and it's how you tell all-in serverless billing from classic compute that
+also shows up as separate cloud infra lines.</p>
+<p><strong>This SQL is repurposable</strong> — that's a feature, not a one-off:</p>
+<ul>
+<li><strong>Run it standalone.</strong> Paste it into Databricks SQL / a notebook (set the
+  <code>:account_prices</code> parameter) to materialize a FOCUS table, export it to
+  Parquet/Delta, and ingest via <code>aws_focus</code>'s S3 FOCUS export path — no live API needed.</li>
+<li><strong>Template for other warehouses.</strong> It's the reference pattern for <em>source-side</em>
+  FOCUS mapping; the planned <code>snowflake</code>/<code>bigquery</code> connectors follow the same shape
+  (run a warehouse-native FOCUS query, then map the rows).</li>
+<li><strong>Fork &amp; extend.</strong> The upstream mapping is explicitly "best-effort"; edit the
+  vendored copy to add columns or refine the <code>billing_origin_product</code> taxonomy. To
+  refresh it, re-pull the upstream file and re-apply the header.</li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>FOCUS™ is a trademark of the FinOps Foundation; the FOCUS spec is licensed
+CC-BY 4.0. The vendored query retains its source attribution in its header.</p>
+</div>
+<h2 id="databricks-efficiency-table-inventory-driver-health-telemetry">Databricks efficiency, table inventory &amp; driver-health telemetry</h2>
+<p>Same connector, same warehouse connection, three more pulls beyond the FOCUS
+cost mapping above — all via <code>fetch_efficiency()</code>/<code>fetch_driver_health()</code>, run
+after every connector's cost <code>fetch()</code> completes. Each is its own vendored SQL
+file under <code>ingest/connectors/sql/</code>, aggregated <strong>at source</strong> (one row per
+entity × month, not one row per query/run).</p>
+<table>
+<thead>
+<tr>
+<th>Signal</th>
+<th>Grain</th>
+<th>Source</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Job run health — run/failure counts, node utilization overlapped with run windows</td>
+<td><code>job_id</code> × month</td>
+<td><code>databricks_efficiency.sql</code>: <code>system.lakeflow.job_run_timeline</code>, <code>system.lakeflow.jobs</code>, <code>system.compute.node_timeline</code></td>
+</tr>
+<tr>
+<td>All-purpose cluster utilization — CPU/mem avg + peak, autoscale sizing, owner</td>
+<td><code>cluster_id</code> × month</td>
+<td><code>system.compute.node_timeline</code>, <code>system.compute.clusters</code>, <code>system.compute.node_types</code></td>
+</tr>
+<tr>
+<td>SQL warehouse disk spill / shuffle</td>
+<td><code>warehouse_id</code> × month</td>
+<td><code>system.query.history</code> (<code>spilled_local_bytes</code>, <code>shuffle_read_bytes</code>)</td>
+</tr>
+<tr>
+<td>Billed-cost attribution for every row above</td>
+<td>entity × month</td>
+<td><code>system.billing.usage</code> ⋈ <code>system.billing.account_prices</code> — the same rate resolution as the FOCUS pull, so <code>billed_cost</code> reconciles to it</td>
+</tr>
+<tr>
+<td>Delta table inventory — size, file count, compression codec</td>
+<td>top 20 tables by size, snapshotted "as of today" (Delta has no historical-size API)</td>
+<td><code>system.information_schema.tables</code> (candidates, top 200 by <code>last_altered</code>) then a concurrent <code>DESCRIBE DETAIL</code> per table</td>
+</tr>
+<tr>
+<td>Client-driver fleet health — which driver/app/user is hitting the warehouse, and how often (a compliance signal, no cost)</td>
+<td><code>client_driver</code> × <code>client_application</code> × <code>executed_by</code> × month</td>
+<td><code>databricks_driver_health.sql</code>: <code>system.query.history</code> (<code>client_driver</code>, <code>client_application</code>, <code>executed_by</code>)</td>
+</tr>
+</tbody>
+</table>
+<p><code>billing_origin_product</code> (<code>JOBS</code> / <code>ALL_PURPOSE</code> / <code>SQL</code> / <code>MODEL_SERVING</code>) is
+what routes a row to the right branch — the same field the FOCUS mapping
+already reads, so a workload's cost and its efficiency signal always agree on
+what kind of compute it is.</p>
+<p><strong>Known gaps</strong> (investigated, not silently missing): classic JOBS/ALL_PURPOSE
+Spark execution has no system-table spill/shuffle signal at all (mitigated by
+CPU-wait/memory-swap/disk-headroom proxy signals, always <code>candidate</code>
+confidence); DLT/Lakeflow serverless pipeline compute is entirely unattributed
+in this plane, though its cost is still captured correctly by the FOCUS pull.
+Full detection table and the reasoning behind both gaps:
+<a href="../design/efficiency-waste/">Efficiency / waste</a>.</p>
+<h2 id="redshift-efficiencywaste-telemetry">Redshift efficiency/waste telemetry</h2>
+<p>Unlike every other connector, <code>redshift</code> does not map cost — Redshift's own SKUs
+already arrive via <code>aws_focus</code> (AWS Data Exports FOCUS carries <code>ServiceName="Amazon
+Redshift"</code>/<code>"Amazon Redshift Spectrum"</code>), so <code>RedshiftConnector.fetch()</code> is a
+deliberate no-op. All of its telemetry work is <code>fetch_efficiency()</code>, via the Redshift
+Data API (IAM-based; falls back to a direct SQL connection over an SSH bastion tunnel
+for a locked-down VPC cluster — see <code>RedshiftConfig.bastion</code>). Its $ breakdown is read
+from <code>aws_focus</code>'s already-ingested BRONZE rows for the same window
+(<code>x_cost_subcategory</code>, stamped by <code>aws_focus._classify_redshift_cost_category</code>)
+rather than a second Cost Explorer call — <code>ingest/runner.py</code> runs every connector's
+cost <code>fetch()</code> to completion before any connector's <code>fetch_efficiency()</code> runs, so
+those rows are guaranteed on disk by the time this reads them, <strong>if</strong> <code>aws_focus</code> is
+enabled and has ingested this window. <strong><code>aws_focus</code> is recommended but not required</strong>:
+without it, the cluster's $ figures are just absent/zero — every other signal (query
+patterns, per-user activity, WLM health, table inventory/usage) still runs fully,
+since none of it depends on cost data.</p>
+<p>Auth: <code>access_key_env</code>/<code>secret_key_env</code> name environment variables to read static
+AWS keys from (same pattern as every AWS connector); leave both unset to fall through
+to boto3's own default chain (IAM role, <code>~/.aws/credentials</code> default profile). Set
+<code>aws_profile</code> to authenticate as a specific named profile (including AWS SSO
+profiles) instead — takes priority over the env-var fields when set. This governs
+the AWS API calls (Data API, <code>describe_clusters</code>, <code>describe_reserved_nodes</code>) — it's
+separate from the SQL-query auth below.</p>
+<p><strong>SQL-query auth is two independent choices</strong>: which connection path reaches the
+cluster, and how that connection authenticates.</p>
+<p>Connection path, checked in this order:</p>
+<ol>
+<li><strong><code>bastion_host</code> set</strong> — a direct SQL connection over an SSH tunnel, for a
+   cluster locked down in a private VPC that even a direct connection can't reach
+   without a jump host. All <code>bastion_*</code> fields (<code>bastion_host</code>, <code>bastion_port</code>,
+   <code>bastion_user</code>, <code>bastion_private_key_path</code>, <code>bastion_private_key_passphrase_env</code>)
+   describe the SSH jump host itself, not the Redshift cluster — flattened directly
+   onto <code>RedshiftConfig</code> (no nested sub-object) specifically so they can never
+   collide by name with the Redshift-side <code>db_*</code> fields.</li>
+<li><strong><code>bastion_host</code> unset</strong> — a direct SQL connection straight to the cluster's
+   real endpoint, no tunnel. For a cluster that's reachable directly (public, or
+   same network).</li>
+</ol>
+<p>Either path needs <code>db_user</code> and <code>cluster_identifier</code> (provisioned clusters only).
+If neither is reachable over SQL at all, leave both unset — see mode 3 below.</p>
+<p>Authentication for that connection: by default a short-lived IAM-authenticated
+credential (<code>redshift:GetClusterCredentials</code> for <code>db_user</code>, no password anywhere).
+Set <strong><code>db_password_env</code></strong> to connect with a plain native DB user/password instead —
+e.g. before <code>GetClusterCredentials</code> IAM access is set up, or against a local/dev
+cluster. Same env var, whether the connection above is tunneled or direct.</p>
+<ol>
+<li><strong>Neither <code>bastion_host</code> nor a SQL connection configured (the default)</strong> — the
+   Data API: IAM (<code>db_user</code>) or Secrets Manager (<code>secret_arn</code>); no persistent
+   connection at all. <code>db_password_env</code> has no effect here.</li>
+</ol>
+<p>Whichever of modes 1/2 is active, one connection is opened for the whole
+<code>fetch_efficiency()</code> pull and reused across all 5 queries — not reconnected per
+query. As with every other credential in this file, only the <em>name</em> of the
+environment variable goes in config, never the password itself.</p>
+<p><strong>Redshift cluster endpoint</strong>: modes 1 and 2 both need the cluster's real host/port
+— auto-discovered via <code>describe_clusters</code> by default. Set <code>db_host</code>/<code>db_port</code> to
+skip that AWS API call entirely (e.g. you don't want to grant even a read-only
+Describe* permission). <code>_reserved_node_coverage()</code>'s own node-count lookup still
+calls <code>describe_clusters</code> regardless — that's a separate, unrelated signal.</p>
+<table>
+<thead>
+<tr>
+<th>Signal</th>
+<th>Grain</th>
+<th>Source</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Cluster $ breakdown (compute/concurrency-scaling/storage/Spectrum), reserved-node coverage, WLM queue wait (p95/p99, wait-to-exec ratio), overall disk-spill rate</td>
+<td>one row per cluster/workgroup × month</td>
+<td><code>aws_focus</code> BRONZE rows + <code>describe_reserved_nodes</code> + <code>redshift_efficiency.sql</code> (STL_WLM_QUERY, SVCS_CONCURRENCY_SCALING_USAGE)</td>
+</tr>
+<tr>
+<td>Query-pattern runtime/spill/skew — which repeated query shape (hashed, not stored verbatim) is slow, spilling, or skewed</td>
+<td><code>query_pattern</code> × month, top-200 by runtime</td>
+<td><code>redshift_query_pattern_metrics.sql</code> (STL_QUERY, STL_WLM_QUERY, SVL_QUERY_REPORT)</td>
+</tr>
+<tr>
+<td>Per-user CPU/scan/spill pressure and cost-concentration share</td>
+<td><code>sql_warehouse_user</code> × month, top-50 by exec time</td>
+<td><code>redshift_user_activity.sql</code> (SVL_QUERY_METRICS_SUMMARY, SVL_QUERY_REPORT)</td>
+</tr>
+<tr>
+<td>Table inventory (size/encoding/maintenance-staleness) + usage (query count, last access, days since last access)</td>
+<td><code>table</code> × month, generous cap (5000 — a pathological-catalog safety valve, not a curation cut, since the waste rules and dashboard pagination do the real narrowing)</td>
+<td>SVV_TABLE_INFO + STL_SCAN</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Retention caveat:</strong> STL_<em>/SVL_</em> system tables typically retain only ~2–5 days of
+history unless the cluster has STL log export to S3/CloudWatch configured — so the
+query-pattern, per-user, and table-usage signals degrade if <code>flashlight ingest</code>
+doesn't run at least every 1–2 days. This is a property of Redshift's system tables,
+not something the connector can fix.</p>
+<p><strong>Not yet validated against a live cluster</strong> — column names follow AWS's published
+system-table docs; each vendored SQL file carries its own "spot-check <code>cause_detail</code>
+before trusting this" note, same discipline as <code>databricks_efficiency.sql</code>.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="redshift/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Amazon Redshift">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Amazon Redshift
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="custom/" class="md-footer__link md-footer__link--next" aria-label="Next: Build a connector">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Build a connector
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.top", "navigation.footer", "toc.follow", "search.suggest", "search.highlight", "content.code.copy", "content.tabs.link"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  </body>
+</html>

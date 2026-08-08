@@ -1,0 +1,41 @@
+/* Brand accent: the same "savings" green the dashboard already uses
+   (chrome.py OPPORTUNITY / SEMANTIC["savings"] = #199e70), not Material's
+   stock green preset. */
+/* Material sets data-md-color-* on <body>, not <html> — a :root rule loses to
+   body's own [data-md-color-primary] re-declaration despite loading later, since
+   custom-property inheritance resolves from the nearest ancestor with an explicit
+   value, not global cascade order. Target body directly to actually win. */
+body[data-md-color-scheme="default"][data-md-color-primary="white"] {
+  --md-typeset-a-color: #199e70;
+  --md-accent-fg-color: #199e70;
+  --md-accent-fg-color--transparent: #199e701a;
+}
+body[data-md-color-scheme="slate"][data-md-color-primary="black"] {
+  --md-typeset-a-color: #22b884;
+  --md-accent-fg-color: #22b884;
+  --md-accent-fg-color--transparent: #22b8841a;
+}
+
+/* Material's default h1 is a washed-out grey, light-weight — bold it to black. */
+.md-typeset h1 {
+  color: var(--md-default-fg-color);
+  font-weight: 700;
+}
+
+.md-typeset h2 {
+  font-weight: 700;
+}
+
+/* Site name pill next to the header logo, e.g. "Flashlight [DOCS]". */
+.md-header__topic:not([data-md-component="header-topic"]) .md-ellipsis::after {
+  content: "DOCS";
+  margin-left: 0.5em;
+  padding: 0.1em 0.5em;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  border-radius: 0.9em;
+  background-color: var(--md-default-fg-color--lightest);
+  color: var(--md-default-fg-color--light);
+  vertical-align: middle;
+}

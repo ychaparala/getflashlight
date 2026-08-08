@@ -1,0 +1,20 @@
+# Flashlight
+
+> FOCUS-based, multi-cloud spend visualization. Finds what's burning money in the dark.
+
+FOCUS-based, multi-cloud spend visualization. Ingests cloud billing in the FinOps FOCUS format, standardizes it into a BRONZE/SILVER/GOLD Parquet lake, and serves a bundled dashboard plus an MCP server for agents. Installs with `pip install getflashlight` — no Docker, no database server.
+
+
+## Docs
+
+- [Home](https://getflashlight.app/index.md): Overview — what Flashlight is and why the numbers are trustworthy
+- [Quickstart](https://getflashlight.app/quickstart/index.md): Sample data to a running dashboard in two commands
+- [Data architecture](https://getflashlight.app/architecture/index.md): The BRONZE → SILVER → GOLD lake and its invariants
+- [Mapping details](https://getflashlight.app/connectors/index.md): AWS, Databricks, Redshift, and the mapping SQL
+- [CLI](https://getflashlight.app/reference/cli/index.md): Every `flashlight` command
+
+## Design
+
+- [Efficiency and recoverable spend](https://getflashlight.app/design/efficiency-waste/index.md): The efficiency/waste GOLD group and its rules
+- [AI costs and usage](https://getflashlight.app/design/ai-costs/index.md): AI/LLM spend, token attribution per project and user, and why a $/token figure is only honest for pay-per-token serving
+
